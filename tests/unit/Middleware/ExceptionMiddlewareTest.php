@@ -30,7 +30,7 @@ use OCP\ILogger;
 use OCP\IConfig;
 
 
-class SharingMiddlewareTest extends \Test\TestCase {
+class ExceptionMiddlewareTest extends \Test\TestCase {
 
 	/** @var ILogger */
 	private $logger;
@@ -41,7 +41,7 @@ class SharingMiddlewareTest extends \Test\TestCase {
 	public function setUp() {
 		$this->logger = $this->createMock(ILogger::class);
 		$this->config = $this->createMock(IConfig::class);
-		$this->sharingMiddleware = new SharingMiddleware(
+		$this->sharingMiddleware = new ExceptionMiddleware(
 			$this->logger,
 			$this->config
 		);
