@@ -32,8 +32,8 @@ Util::addStyle('activity', 'style');
 Util::addStyle('comments', 'comments');
 Util::addScript('oc-backbone-webdav');
 
-Util::addStyle('deck', '../js/build/vendor');
-Util::addScript('deck', 'build/vendor');
+//Util::addStyle('deck', '../js/build/vendor');
+//Util::addScript('deck', 'build/vendor');
 
 Util::addStyle('deck', 'style');
 Util::addScript('deck', 'build/deck');

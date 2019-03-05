@@ -31,6 +31,8 @@ use OCA\Deck\Db\CardMapper;
 use OCA\Deck\Notification\Notifier;
 use OCP\AppFramework\App;
 use OCA\Deck\Middleware\SharingMiddleware;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\Collaboration\Resources\IManager;
 use OCP\Comments\CommentsEntityEvent;
 use OCP\IGroup;
 use OCP\IUser;
@@ -99,6 +101,11 @@ class Application extends App {
 			}
 		});
 
+		$dispatcher = $this->getContainer()->getServer()->getEventDispatcher();
+		$dispatcher->addListener(TemplateResponse::EVENT_LOAD_ADDITIONAL_SCRIPTS_LOGGEDIN, function() {
+			\OC_Util::addScript('deck', 'build/collections');
+		});
+
 	}
 
 	public function registerNavigationEntry() {
@@ -145,5 +152,15 @@ class Application extends App {
 		$this->getContainer()->getServer()->getCommentsManager()->registerEventHandler(function () {
 			return $this->getContainer()->query(CommentEventHandler::class);
 		});
+	}
+
+	protected function registerCollaborationResources() {
+		/**
+		 * Register Collaboration ResourceProvider
+		 */
+		/** @var IManager $resourceManager */
+		$resourceManager = $this->getContainer()->query(IManager::class);
+		$resourceManager->registerResourceProvider(ResourceProvider::class);
+		Listener::register($server->getEventDispatcher());
 	}
 }
